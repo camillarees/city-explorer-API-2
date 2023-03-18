@@ -16,6 +16,7 @@ const getWeatherData = async (request, response, next) => {
         const weatherURL = `https://api.weatherbit.io/v2.0/forecast/daily?key=${weatherKey}&lat=${lat}&lon=${lon}&days=5`
         const weatherResponse = await axios.get(weatherURL);
         const key = 'weather-' + lat + lon;
+        console.log(weatherURL);
  
         if (cache[key] && (Date.now() - cache[key].timestamp < 50000)) {
             console.log('weather cache hit');
@@ -33,10 +34,11 @@ const getWeatherData = async (request, response, next) => {
 }
 
 
+
 class Forecast {
     constructor(forecast) {
         // find method to find the type of list we want to return
-        this.date = forecast.datetime;
+        this.date = forecast.valid_date;
         this.description = forecast.weather.description;
     };
 
